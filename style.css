@@ -14,3 +14,7 @@
     grid-column-end: 5;
     grid-row: 6 / 7;
 }
+
+.operator {
+    background-color:dimgrey;
+}
