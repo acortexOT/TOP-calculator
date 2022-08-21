@@ -1,7 +1,16 @@
-let firstNumber =
-let secondNumber = 
-let operator =
+let firstNumber = "";
+let secondNumber
+let operator
 
+const screen = document.querySelector('.screen');
+//Input numbers
+const numbers = document.querySelectorAll('.number');
+numbers.forEach((number)=> {
+    number.addEventListener('click', ()=> {
+        screen.textContent = firstNumber + number.textContent;
+        firstNumber = firstNumber + number.textContent;
+    })
+})
 //Calculation functions
 function add(a,b) {
     return a+b;
