@@ -1,52 +1,82 @@
-let firstNumber = "";
-let secondNumber
-let operator
+let input = '';
+const operatorArr = []
 const screen = document.querySelector('.screen');
 //Number button functionality
 const numbers = document.querySelectorAll('.number');
 numbers.forEach((number)=> {
     number.addEventListener('click', ()=> {
-        screen.textContent = firstNumber + number.textContent;
-        firstNumber = firstNumber + number.textContent;
+        input += number.textContent;
+        screen.textContent = input;
     })
 })
 //Clear button functionality
 const clear = document.querySelector('#clear');
 clear.addEventListener('click', ()=> {
     screen.textContent = '0';
-    firstNumber = '';
+    input = '';
 })
 //Backspace button functionality
 const backspace = document.querySelector('#backspace');
 backspace.addEventListener('click', ()=>{
     const numberArr = Array.from(screen.textContent)    //create array from input
     const removedNum = numberArr.pop(); 
-    screen.textContent = numberArr.join('');    //convert new array back into string
-    firstNumber = numberArr.join('');   //update variable with new number  
+    input = numberArr.join('');   //convert new array back into string 
+    screen.textContent = input;    
 })
 //Negative button functionality
 const negative = document.querySelector('#negative');
 negative.addEventListener('click', ()=>{
     const numberArr = Array.from(screen.textContent)    //create array from input
+    //NEED TO ACCOUNT FOR MULTIPLE ARGUMENTS
+    //iterate backwards from end of string
+    //if ' ' then stop function (can't reverse sign of an operator)
+    //if num AND includes ' ', iterate to ' '
+    //if num AND !includes ' ', change sign at [0];
     if (numberArr[0] === '-') {
         const removedSign = numberArr.shift();
     } else {
         numberArr.unshift('-');
     }; 
-    screen.textContent = numberArr.join('');    //convert new array back into string
-    firstNumber = numberArr.join('');   //update variable with new number  
+    input = numberArr.join('');   //convert new array back into string
+    screen.textContent = input;    
 })
 //Period button functionality
 const period = document.querySelector('#period');
     period.addEventListener('click', ()=> {
-    const currentNumber = screen.textContent;
-        if (currentNumber.includes('.')) {return}   //interrupt if period is there
-        screen.textContent = firstNumber + '.';
-        firstNumber = firstNumber + '.';
+        if (input.includes('.')) {return}   //interrupt if period is there
+        input += '.';
+        screen.textContent = input;
     })
+//Operator button functionality
+const operators = document.querySelectorAll('.operator');
+operators.forEach((op)=> {
+    op.addEventListener('click', ()=> {
+        if (input[input.length-1] === (' ')) {return}   //interrupt if last input was an operator (separated by spaces)
+            input += ' ' + op.textContent + ' ';
+            screen.textContent = input;
+        operatorArr.push(op.id);
+    })
+})
+//Equals button functionality
+const equals = document.querySelector('#equals');
+equals.addEventListener('click', ()=> {
+    const omits = ['+', '-', 'x', '÷']; //list of operators to omit from number array
+    const noSpaces = input.split(' ');  //separate string of numbers into their respective values
+    const numberArr = noSpaces.filter((item)=>!omits.includes(item));
+    let sum = numberArr[0];
+    console.log(sum, operatorArr[0], numberArr[1]);
+    
+    for (let i = 0; i < operatorArr.length ; i++) {
+            sum = operate(sum,operatorArr[i],numberArr[i+1]);
+            console.log(sum); 
+    }
+    screen.textContent = sum;
+    input = '';
+    operatorArr.length = 0;
+})
 //Calculation functions
 function add(a,b) {
-    return a+b;
+    return parseInt(a)+parseInt(b);
 };
 function minus(a,b) {
     return a-b;
@@ -58,21 +88,21 @@ function divide(a,b) {
     return a/b;
 };
 //Choosing right calculation when operator's selected
-function operate() {
+function operate(firstNumber,operator,secondNumber) {
     switch (operator) {
-        case 'add':
-            add(firstNumber,secondNumber);
+        case 'plus':
+            return add(firstNumber,secondNumber);
         break;
         case 'minus':
-            minus(firstNumber,secondNumber);
+            return minus(firstNumber,secondNumber);
         break;
         case 'multiply':
-            multiply(firstNumber,secondNumber);
+            return multiply(firstNumber,secondNumber);
         break;
         case 'divide':
-            divide(firstNumber,secondNumber);
+            return divide(firstNumber,secondNumber);
         break;
-        default: 
+        default: return 'Error';
         //put error message here
     }
 };
