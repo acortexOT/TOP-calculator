@@ -29,8 +29,8 @@ negative.addEventListener('click', ()=>{
     const numberArr = Array.from(screen.textContent)    //create array from input
     //NEED TO ACCOUNT FOR MULTIPLE ARGUMENTS
     //iterate backwards from end of string
-    //if ' ' then stop function (can't reverse sign of an operator)
-    //if num AND includes ' ', iterate to ' '
+    //if /operator/ then stop function (can't reverse sign of an operator)
+    //if num AND includes ' ', iterate to last ' ' and change sign at last space
     //if num AND !includes ' ', change sign at [0];
     if (numberArr[0] === '-') {
         const removedSign = numberArr.shift();
@@ -64,11 +64,8 @@ equals.addEventListener('click', ()=> {
     const noSpaces = input.split(' ');  //separate string of numbers into their respective values
     const numberArr = noSpaces.filter((item)=>!omits.includes(item));
     let sum = numberArr[0];
-    console.log(sum, operatorArr[0], numberArr[1]);
-    
     for (let i = 0; i < operatorArr.length ; i++) {
             sum = operate(sum,operatorArr[i],numberArr[i+1]);
-            console.log(sum); 
     }
     screen.textContent = sum;
     input = '';
