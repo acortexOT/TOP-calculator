@@ -53,11 +53,12 @@ negative.addEventListener('click', ()=>{
     input = numberArr.join('');   //convert new array back into string
     screen.textContent = input;    
 })
-//STILL NEED TO ALLOW FOR MULTIPLE NUMBERS TO HAVE A PERIOD!!!!
 //Period button functionality
 const period = document.querySelector('#period');
     period.addEventListener('click', ()=> {
-        if (input.includes('.')) {return}   //interrupt if period is there
+        const numberArr = input.split(' ');
+        const lastNumber = numberArr[numberArr.length-1];
+        if (lastNumber.includes('.')) {return}   //interrupt if period is there
         input += '.';
         screen.textContent = input;
     })
