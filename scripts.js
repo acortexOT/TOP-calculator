@@ -5,6 +5,7 @@ const screen = document.querySelector('.screen');
 const numbers = document.querySelectorAll('.number');
 numbers.forEach((number)=> {
     number.addEventListener('click', ()=> {
+        if (input.length > 10) {return} //interrupt to prevent overflow
         input += number.textContent;
         screen.textContent = input;
     })
@@ -56,6 +57,7 @@ negative.addEventListener('click', ()=>{
 //Period button functionality
 const period = document.querySelector('#period');
     period.addEventListener('click', ()=> {
+        if (input.length > 10) {return} //interrupt to prevent overflow
         const numberArr = input.split(' ');
         const lastNumber = numberArr[numberArr.length-1];
         if (lastNumber.includes('.')) {return}   //interrupt if period is there
@@ -66,6 +68,7 @@ const period = document.querySelector('#period');
 const operators = document.querySelectorAll('.operator');
 operators.forEach((op)=> {
     op.addEventListener('click', ()=> {
+        if (input.length > 10) {return} //interrupt to prevent overflow
         if (input[input.length-1] === (' ')) {return}   //interrupt if last input was an operator (separated by spaces)
             input += ' ' + op.textContent + ' ';
             screen.textContent = input;
@@ -82,9 +85,10 @@ equals.addEventListener('click', ()=> {
     for (let i = 0; i < operatorArr.length ; i++) {
             sum = operate(sum,operatorArr[i],numberArr[i+1]);
     };
-    if (sum === Infinity || sum === NaN) {  //Sarcastic error message
+    if (sum === Infinity || sum === NaN || sum === 'NaN') {  //Sarcastic error message
         screen.textContent = 'Beep boop... Error. Does not compute... boop beep.'
     } else {
+        if (!Number.isInteger(sum)) {sum = sum.toPrecision(9)};
         screen.textContent = sum;
     }
     input = '';
