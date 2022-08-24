@@ -27,12 +27,9 @@ backspace.addEventListener('click', ()=>{
 const negative = document.querySelector('#negative');
 negative.addEventListener('click', ()=>{
     const numberArr = Array.from(screen.textContent)    //create array from input
-    //NEED TO ACCOUNT FOR MULTIPLE ARGUMENTS
-    //if last value is space then stop function (can't reverse sign of an operator)
     if(input[input.length-1] === ' ') { //check if input has operator
         return  //can't change sign of operator, terminate function
     };
-    //iterate backwards from end of string
     for (let i = numberArr.length-1; i > 0; --i){   //search for last number
         if (numberArr[i] === ' ') {
             if (numberArr[i+1] === '-') {
@@ -56,9 +53,7 @@ negative.addEventListener('click', ()=>{
     input = numberArr.join('');   //convert new array back into string
     screen.textContent = input;    
 })
-    
-    //if num AND includes ' ', iterate to last ' ' and change sign at last space
-    //if num AND !includes ' ', change sign at [0];
+//STILL NEED TO ALLOW FOR MULTIPLE NUMBERS TO HAVE A PERIOD!!!!
 //Period button functionality
 const period = document.querySelector('#period');
     period.addEventListener('click', ()=> {
@@ -85,7 +80,8 @@ equals.addEventListener('click', ()=> {
     let sum = numberArr[0];
     for (let i = 0; i < operatorArr.length ; i++) {
             sum = operate(sum,operatorArr[i],numberArr[i+1]);
-    }
+    };
+    //STILL NEED ERROR IF NaN and CHEEKY MESSAGE IF INFINITY
     screen.textContent = sum;
     input = '';
     operatorArr.length = 0;
@@ -104,6 +100,7 @@ function divide(a,b) {
     return a/b;
 };
 //Choosing right calculation when operator's selected
+//STILL NEED TO ACCOUNT FOR FLOATING POINT NUMBERS INPUTTED TO CALCULATIONS
 function operate(firstNumber,operator,secondNumber) {
     switch (operator) {
         case 'plus':
