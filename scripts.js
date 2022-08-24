@@ -28,18 +28,37 @@ const negative = document.querySelector('#negative');
 negative.addEventListener('click', ()=>{
     const numberArr = Array.from(screen.textContent)    //create array from input
     //NEED TO ACCOUNT FOR MULTIPLE ARGUMENTS
+    //if last value is space then stop function (can't reverse sign of an operator)
+    if(input[input.length-1] === ' ') { //check if input has operator
+        return  //can't change sign of operator, terminate function
+    };
     //iterate backwards from end of string
-    //if /operator/ then stop function (can't reverse sign of an operator)
-    //if num AND includes ' ', iterate to last ' ' and change sign at last space
-    //if num AND !includes ' ', change sign at [0];
-    if (numberArr[0] === '-') {
+    for (let i = numberArr.length-1; i > 0; --i){   //search for last number
+        if (numberArr[i] === ' ') {
+            if (numberArr[i+1] === '-') {
+                numberArr.splice(i+1,1);      //make number positive it it's negative
+                input = numberArr.join('');   //convert new array back into string
+                screen.textContent = input;
+                break  
+            } else {
+                numberArr.splice(i+1, 0, '-') //make number negative if it's positive
+                input = numberArr.join('');   //convert new array back into string
+                screen.textContent = input;  
+                break
+            };
+        };
+    };       
+    if (numberArr.includes(!' ') && numberArr[0] === '-') { //if only 1 value, add change sign at front of array
         const removedSign = numberArr.shift();
-    } else {
+    } else if (numberArr.includes(!' ')){
         numberArr.unshift('-');
     }; 
     input = numberArr.join('');   //convert new array back into string
     screen.textContent = input;    
 })
+    
+    //if num AND includes ' ', iterate to last ' ' and change sign at last space
+    //if num AND !includes ' ', change sign at [0];
 //Period button functionality
 const period = document.querySelector('#period');
     period.addEventListener('click', ()=> {
