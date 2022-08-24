@@ -48,9 +48,9 @@ negative.addEventListener('click', ()=>{
             };
         };
     };       
-    if (numberArr.includes(!' ') && numberArr[0] === '-') { //if only 1 value, add change sign at front of array
+    if (!numberArr.includes(' ') && numberArr[0] === '-') { //if only 1 value, add change sign at front of array
         const removedSign = numberArr.shift();
-    } else if (numberArr.includes(!' ')){
+    } else if (!numberArr.includes(' ')){
         numberArr.unshift('-');
     }; 
     input = numberArr.join('');   //convert new array back into string
