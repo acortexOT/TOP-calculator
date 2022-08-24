@@ -81,14 +81,17 @@ equals.addEventListener('click', ()=> {
     for (let i = 0; i < operatorArr.length ; i++) {
             sum = operate(sum,operatorArr[i],numberArr[i+1]);
     };
-    //STILL NEED ERROR IF NaN and CHEEKY MESSAGE IF INFINITY
-    screen.textContent = sum;
+    if (sum === Infinity || sum === NaN) {  //Sarcastic error message
+        screen.textContent = 'Beep boop... Error. Does not compute... boop beep.'
+    } else {
+        screen.textContent = sum;
+    }
     input = '';
     operatorArr.length = 0;
 })
 //Calculation functions
 function add(a,b) {
-    return parseInt(a)+parseInt(b);
+    return parseFloat(a)+parseFloat(b);
 };
 function minus(a,b) {
     return a-b;
@@ -100,7 +103,6 @@ function divide(a,b) {
     return a/b;
 };
 //Choosing right calculation when operator's selected
-//STILL NEED TO ACCOUNT FOR FLOATING POINT NUMBERS INPUTTED TO CALCULATIONS
 function operate(firstNumber,operator,secondNumber) {
     switch (operator) {
         case 'plus':
