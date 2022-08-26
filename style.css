@@ -28,7 +28,7 @@ body {
     font-weight: 500;
     margin: 5px;
 }
-#equals {
+#Enter {
     grid-column-start: 3;
     grid-column-end: 5;
     grid-row: 6 / 7;
